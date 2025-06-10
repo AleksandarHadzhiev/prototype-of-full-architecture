@@ -1,9 +1,20 @@
 import json
 
 from fastapi import FastAPI, Response, Request, status
+from fastapi.middleware.cors import CORSMiddleware
+from config import load_config
 
 def create_app(env="dev"):
+    config = load_config(env=env)
     app = FastAPI()
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins = config.ALLOWED_ORIGINS,
+        allow_credentials=True,
+        allow_methods = ["*"],
+        allow_headers = ["*"],
+    )
 
     @app.get('/')
     def index(request: Request):
