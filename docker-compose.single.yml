@@ -9,3 +9,20 @@ services:
     ports:
       - "3000:3000"
     restart: "always"
+  
+  forward-proxy:
+    container_name: forward-proxy
+    depends_on:
+      - web-server
+    build:
+      context: ./forward-proxy
+      dockerfile: Dockerfile
+    environment: 
+      - BASE_URL=http://localhost:5000
+      - TARGET=http://web:3000/
+      - ENV=docker
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    restart: "always"
