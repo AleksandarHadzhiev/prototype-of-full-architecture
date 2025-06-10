@@ -2,9 +2,9 @@ const http = require("http")
 const httpProxy = require('http-proxy')
 require('dotenv').config()
 const proxy = httpProxy.createProxyServer({})
+// .env does not support list, so manually turn it into one.
 
-const targetsVariable = process.env.TARGETS
-const targets = targetsVariable.split(', ');
+const targets = process.env.TARGETS.split(', ')
 
 const server = http.createServer((req, res) => {
     if (req.url == "/") {
@@ -18,7 +18,6 @@ const server = http.createServer((req, res) => {
         })
     }
 })
-
 
 server.listen(5000, () => {
     console.log(`Proxy server is running on ${process.env.BASE_URL}`)
