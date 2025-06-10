@@ -1,0 +1,21 @@
+[scripts]
+test = "pytest . -vv"
+start = "python app.py dev 127.0.0.1"
+docker = "python app.py docker 0.0.0.0"
+
+
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+pytest = "*"
+uvicorn = "*"
+httpx = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
