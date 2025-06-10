@@ -1,0 +1,22 @@
+services:
+  web-server-1:
+    container_name: web-1
+    build:
+      context: ./web-server
+      dockerfile: Dockerfile
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    restart: "always"
+
+  web-server-2:
+    container_name: web-2
+    build:
+      context: ./web-server
+      dockerfile: Dockerfile
+    expose:
+      - "3000"
+    ports:
+      - "3001:3000"
+    restart: "always"
