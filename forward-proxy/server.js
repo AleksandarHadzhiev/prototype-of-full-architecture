@@ -1,10 +1,10 @@
 const http = require("http")
 const httpProxy = require('http-proxy')
 require('dotenv').config()
-console.log(process.env.ENV)
 const proxy = httpProxy.createProxyServer({})
 
-const targets = process.env.TARGETS
+const targetsVariable = process.env.TARGETS
+const targets = targetsVariable.split(', ');
 
 const server = http.createServer((req, res) => {
     if (req.url == "/") {
