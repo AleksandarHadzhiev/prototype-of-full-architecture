@@ -1,7 +1,10 @@
-from jinja2 import TemplateNotFound
-import uvicorn
+import json
+import logging
+import requests
 
-from fastapi import FastAPI, Request, status
+from jinja2 import TemplateNotFound
+
+from fastapi import FastAPI, Request, Response, status
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -22,6 +25,10 @@ def create_app(env="dev"):
         allow_methods = ["*"],
         allow_headers = ["*"],
     )
+
+    @app.get("/")
+    async def index():
+        return Response(content=json.dumps({"message": "Everything booted up."}), status_code=status.HTTP_200_OK)
 
     @app.get("/{page}", response_class=HTMLResponse)
     async def route(page: str, request: Request):
