@@ -6,33 +6,29 @@ const proxy = httpProxy.createProxyServer({})
 
 const cache = new Map()
 
-// .env does not support list, so manually turn it into one.
-// const MINIMUM_NUMBER_OF_WEB_SERVERS = 1
-// let index = 0
+let index = 0
 const target = process.env.TARGET
+function getFreeServer(targets) {
+    const lastIndex = targets.length - 1
+    if (index < lastIndex) {
+        index++;
+        return targets[index]
+    }
+    index = 0;
+    return targets[0]
+}
 
-// function getFreeServer() {
-//     const lastIndex = targets.length - 1
-//     if (index < lastIndex) {
-//         index++;
-//         return targets[index]
-//     }
-//     index = 0;
-//     return urls[0]
-// }
-
-// function getServer() {
-//     if (urls.length > MINIMUM_NUMBER_OF_WEB_SERVERS) {
-//         return getFreeServer()
-//     }
-//     else return urls[0]
-// }
+function getServer() {
+    // .env does not support list, so manually turn it into one.
+    if (target.includes(", ")) {
+        const targets = target.split(", ")
+        return getFreeServer(targets)
+    }
+    else return target
+}
 
 const server = http.createServer((req, res) => {
-    // let url = getServer()
-    // if (url.includes(`"`)) {
-    //     url = url.replace(`"`, "")
-    // }
+    let url = getServer()
     if (req.url == "/") {
         res.writeHead(200, { 'content-type': 'text/html' })
         res.end(`<h1>We are runnig on port:${process.env.PORT} and the web server is on: ${target}</h1>`)
@@ -43,7 +39,7 @@ const server = http.createServer((req, res) => {
             res.end(cache.get(req.url))
         }
         else {
-            proxy.web(req, res, { target: target }, (err) => {
+            proxy.web(req, res, { target: url }, (err) => {
                 res.writeHead(res.statusCode, { 'content-type': 'text/html' })
                 res.end()
             })
