@@ -13,15 +13,15 @@
         Header
     </header>
     <main>
-        <p>Welcome to this amazing To Do web app.</p>
-        <p>Click <a href="/admin">here</a> to go to the admin page</p>
+        <p>Welcome to this amazing Admin page.</p>
+        <p>Click <a href="/index">here</a> to go back to the index page</p>
     </main>
     <footer>
         Footer
     </footer>
     <script>
         function getData() {
-            const url = "/backend/aleks";
+            const url = "http://127.0.0.1:8080";
             fetch(url).then(async (res) => {
                 if (!res.ok) {
                     throw new Error(`Response statusL ${response.status}`);

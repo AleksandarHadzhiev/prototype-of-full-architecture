@@ -9,12 +9,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "*"
 jinja2 = "*"
 uvicorn = "*"
 pytest = "*"
 httpx = "*"
 requests = "*"
+fastapi = "*"
 
 [dev-packages]
 
