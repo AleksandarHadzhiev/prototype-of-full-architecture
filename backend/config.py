@@ -6,15 +6,13 @@ class Config:
 
 class DevConfig(Config):
     ENV = "dev"
-    BASE_URL = "http://127.0.0.1:3000"
-    BACKEND_URL = "http://127.0.0.1:8080"
-    ALLOWED_ORIGINS = ["127.0.0.1:5000"]
+    BASE_URL = "127.0.0.1"
+    ALLOWED_ORIGINS = ["http://localhost:3000",]
 
 class DockerConfig(Config):
     ENV = "docker"
-    BASE_URL = "0.0.0.0"
-    BACKEND_URL = "rev-proxy"
-    ALLOWED_ORIGINS = ["forward-proxy"]
+    BASE_URL = "http://localhost:8080"
+    ALLOWED_ORIGINS = ["http://web-1:3000"]
 
 def load_config(env) -> Config:
     match env:

@@ -18,6 +18,23 @@
     <footer>
         Footer
     </footer>
+    <script>
+        function getData() {
+            const url = "http://127.0.0.1:8080";
+            fetch(url).then(async (res) => {
+                if (!res.ok) {
+                    throw new Error(`Response statusL ${response.status}`);
+                }
+                const json = await res.json();
+                console.log(json);
+            }).catch((error) => {
+                console.error(error.message);
+
+            })
+        }
+
+        getData()
+    </script>
 </body>
 
 </html>
