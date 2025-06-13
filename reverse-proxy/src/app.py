@@ -24,10 +24,27 @@ def create_app(env="dev"):
     balancer = LoadBalancer(servers=targets)
 
     app = FastAPI()
-    @app.get("/")
-    def route(req: Request) -> Response:
+    @app.get("{path}")
+    def get_request(path: str, req: Request) -> Response:
         free_server = balancer.get_server()
         response = requests.get(f"{free_server}/aleks")
         body = response.json()
-        return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
+        return Response(content=json.dumps(body), status_code=response.status_code)
+
+    @app.post("{path}")
+    async def post_request(path: str, request: Request) -> Response:
+        free_server = balancer.get_server()
+        data = await request.json()
+        response = requests.post(f"{free_server}{path}", data=json.dumps(data))
+        body = response.json()
+        return Response(content=json.dumps(body), status_code=response.status_code)
+
+    @app.put("{path}")
+    def put_request(path: str, request: Request) -> Response:
+        pass
+
+    @app.delete("{path}")
+    def delete_request(path: str, request: Request) -> Response:
+        pass
+
     return app
