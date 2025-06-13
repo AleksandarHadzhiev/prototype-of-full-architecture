@@ -13,6 +13,7 @@ fastapi = "*"
 pytest = "*"
 httpx = "*"
 uvicorn = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
