@@ -50,7 +50,6 @@ def create_app(env="dev"):
 
     @app.post("/backend/{path:path}")
     async def backend_post_request(path: str, request: Request):
-        print("IN HERE")
         data = await request.json()
         response = requests.post(f"{config.BACKEND_URL}/{path}", data=json.dumps(data))
         body = response.json()
