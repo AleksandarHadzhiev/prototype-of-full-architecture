@@ -9,6 +9,16 @@ services:
     ports:
       - "8080:8080"
     restart: "always"
+  reverse-proxy:
+    container_name: reverse-proxy
+    build:
+      context: ./reverse-proxy
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    restart: "always"
   web-server:
     container_name: web-1
     build:
