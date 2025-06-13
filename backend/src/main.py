@@ -32,5 +32,10 @@ def create_app(env="dev"):
             message = f"Hello, {name}! Welcome to the app :)"
             return Response(content=json.dumps({"message": message}), status_code=status.HTTP_200_OK)
         else: return Response(content=json.dumps({"error": "Empty name"}), status_code=status.HTTP_400_BAD_REQUEST)
-    
+
+    @app.post("/todos")
+    async def create_todo(request: Request) -> Response:
+        data = await request.json()
+        return Response(content=json.dumps(data), status_code=status.HTTP_201_CREATED)
+
     return app

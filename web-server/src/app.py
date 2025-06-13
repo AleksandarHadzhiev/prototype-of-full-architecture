@@ -37,16 +37,34 @@ def create_app(env="dev"):
                 request=request, name=f"{page}.html"
             )
             return response
-        except TemplateNotFound as not_found:
+        except TemplateNotFound:
             return templates.TemplateResponse(
                     request=request, name=f"not-found.html", status_code=status.HTTP_404_NOT_FOUND
                 )
 
-    @app.get("/backend/{name}")
-    async def call_backend(name: str):
-        response = requests.get(f"{config.BACKEND_URL}")
+    @app.get("/backend/{path:path}")
+    async def backend_get_request(path: str):
+        response = requests.get(f"{config.BACKEND_URL}/{path}")
         body = response.json()
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
+    @app.post("/backend/{path:path}")
+    async def backend_post_request(path: str):
+        response = requests.get(f"{config.BACKEND_URL}/{path}")
+        body = response.json()
+        return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
+
+
+    @app.put("/backend/{path:path}")
+    async def backend_put_request(path: str):
+        response = requests.get(f"{config.BACKEND_URL}/{path}")
+        body = response.json()
+        return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
+
+    @app.delete("/backend/{path:path}")
+    async def backend_delete_request(path: str):
+        response = requests.get(f"{config.BACKEND_URL}/{path}")
+        body = response.json()
+        return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
     return app
