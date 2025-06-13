@@ -42,4 +42,12 @@ def create_app(env="dev"):
                     request=request, name=f"not-found.html", status_code=status.HTTP_404_NOT_FOUND
                 )
 
+    @app.get("/backend/{name}")
+    async def call_backend(name: str):
+        response = requests.get(f"{config.BACKEND_URL}/{name}")
+        body = response.json()
+        print(body)
+        return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
+
+
     return app

@@ -7,12 +7,12 @@ class Config:
 class DevConfig(Config):
     ENV = "dev"
     BASE_URL = "127.0.0.1"
-    ALLOWED_ORIGINS = ["http://localhost:3000",]
+    ALLOWED_ORIGINS = "http://localhost:5000"
 
 class DockerConfig(Config):
     ENV = "docker"
     BASE_URL = "http://localhost:8080"
-    ALLOWED_ORIGINS = ["http://web-1:3000"]
+    ALLOWED_ORIGINS = "http://localhost:5000"
 
 def load_config(env) -> Config:
     match env:

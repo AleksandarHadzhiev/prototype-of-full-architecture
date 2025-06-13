@@ -13,8 +13,8 @@ class DevConfig(Config):
 class DockerConfig(Config):
     ENV = "docker"
     BASE_URL = "0.0.0.0"
-    BACKEND_URL = "rev-proxy"
-    ALLOWED_ORIGINS = ["forward-proxy"]
+    BACKEND_URL = "http://backend-1:8080"
+    ALLOWED_ORIGINS = ["http://forward-proxy:5000"]
 
 def load_config(env) -> Config:
     match env:
