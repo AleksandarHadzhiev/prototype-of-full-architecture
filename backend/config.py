@@ -20,8 +20,8 @@ class DevConfig(Config):
     POSTGRES_USER = "postgres"
     POSTGRES_PASSWORD = "postgres"
     POSTGRES_MASTER_PORT = "5432"
-    POSTGRES_SLAVE_ONE_PORT = "5555"
-    POSTGRES_SLAVE_TWO_PORT = "5556"
+    POSTGRES_SLAVE_ONE_PORT = "59141"
+    POSTGRES_SLAVE_TWO_PORT = "59142"
 
 class DockerConfig(Config):
     ENV = "docker"
