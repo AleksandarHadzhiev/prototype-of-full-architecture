@@ -5,6 +5,33 @@ A small ToDo app, which will serve as a prototype for the next project's archite
 
 This is a practice project. In this project there will be a forward proxy (residential), which will "expose" the web server/s to the internet and be the access point of the application. The web server will be a small app which will on its end connect to a reverse proxy. The reverse proxy will act as a connection bridge between the web server/s and the REST API/s. It will also act as a load balancer (the forward proxy will do the same). The REST API will be a simple application which will provide basic CRUD operations. It will connect to a DB - PostgreSQL. That DB will utilize replicas -> Master and 2 slaves. The master will target all the INSERT, UPDATE, DELETE calls, meanwhile the replicas will handle all the SELECT calls, splitting the calls between one another.
 
+### Run the Application
+
+There are three ways of running the application. Two of them are dockerized and the third is a long process:
+
+! Important -> Kill the previous operation if you want to play around with them -> stop all local servers or run `docker compose -f <file> down`
+#### Docker - single
+Here the app executes with 1 container per service
+1) Make sure you are in the root directory.
+2) Run the following command: `docker compose -f docker-compose.single.yml up`
+3) Additional Info: If you would like you can run the previous command with `-d` at the end. I suggest not to, so that you can see the calls running in the terminal and not have to switch between terminals in the docker envrionment.
+#### Docker - multiple
+Here the app executes with 1 container for the proxies and 2 containers for the web server and 2 contaienrs for the backend. That way the load balancing can be spectated.
+1) Make sure you are in the root directory.
+2) Run the following command: `docker compose -f docker-compose.multiple.yml up`
+3) Additional Info: If you would like you can run the previous command with `-d` at the end. I suggest not to, so that you can see the calls running in the terminal and not have to switch between terminals in the docker envrionment.
+#### Local - long process
+The long version requires you to open a few terminals - 1 terminal per service.
+
+Then in no mandatory order tun the following commands:
+```javascript 
+node server.js // to start the forward-proxy
+```
+
+```python 
+piepnv run start # for each of the other services 
+```
+
 ## Architecture
 
 ![Current architecture idea for the application](images/arch.drawio.png)
