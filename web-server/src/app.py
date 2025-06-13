@@ -44,9 +44,8 @@ def create_app(env="dev"):
 
     @app.get("/backend/{name}")
     async def call_backend(name: str):
-        response = requests.get(f"{config.BACKEND_URL}/{name}")
+        response = requests.get(f"{config.BACKEND_URL}")
         body = response.json()
-        print(body)
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
 
