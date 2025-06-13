@@ -1,7 +1,7 @@
 [scripts]
 test = "pytest . -vv"
-start = "python app.py dev 127.0.0.1"
-docker = "python app.py docker 0.0.0.0"
+start = "python main.py dev 127.0.0.1"
+docker = "python main.py docker 0.0.0.0"
 
 [[source]]
 url = "https://pypi.org/simple"
@@ -10,9 +10,9 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-pytest = "*"
 httpx = "*"
 uvicorn = "*"
+pytest = "*"
 
 [dev-packages]
 
