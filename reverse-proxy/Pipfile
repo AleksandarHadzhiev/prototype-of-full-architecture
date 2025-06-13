@@ -1,3 +1,8 @@
+[scripts]
+test = "pytest . -vv"
+start = "python main.py dev 127.0.0.1"
+docker = "python main.py docker 0.0.0.0"
+
 [[source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
