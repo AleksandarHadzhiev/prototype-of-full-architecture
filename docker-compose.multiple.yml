@@ -122,3 +122,7 @@ services:
     ports:
       - "5000:5000"
     restart: "always"
+
+volumes:
+  postgresql_master_data:
+    driver: local

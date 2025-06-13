@@ -1,9 +1,17 @@
 services:
-
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: acc@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: password
   postgresql-master:
     container_name: master
     build:
-      context: ./
+      context: ./backend
       dockerfile: Dockerfile.sql
     restart: always
     ports:
@@ -17,9 +25,9 @@ services:
       - POSTGRESQL_REPLICATION_MODE=master
       - POSTGRESQL_REPLICATION_USER=repl_user
       - POSTGRESQL_REPLICATION_PASSWORD=repl_user
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=postgres
-      - POSTGRESQL_DATABASE=development_database
+      - POSTGRESQL_USERNAME=dev
+      - POSTGRESQL_PASSWORD=dev
+      - POSTGRESQL_DATABASE=todos
       - ALLOW_EMPTY_PASSWORD=yes
 
   postgresql-slave:
@@ -31,7 +39,7 @@ services:
     depends_on:
       - postgresql-master
     environment:
-      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_PASSWORD=dev
       - POSTGRESQL_MASTER_HOST=postgresql-master
       - POSTGRESQL_PGAUDIT_LOG=READ
       - POSTGRESQL_LOG_HOSTNAME=true
@@ -49,7 +57,7 @@ services:
     depends_on:
       - postgresql-master
     environment:
-      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_PASSWORD=dev
       - POSTGRESQL_MASTER_HOST=postgresql-master
       - POSTGRESQL_PGAUDIT_LOG=READ
       - POSTGRESQL_LOG_HOSTNAME=true
@@ -68,6 +76,8 @@ services:
     ports:
       - "8080:8080"
     restart: "always"
+    profiles:
+      - app
   reverse-proxy:
     container_name: reverse-proxy
     build:
@@ -78,6 +88,8 @@ services:
     ports:
       - "8000:8000"
     restart: "always"
+    profiles:
+      - app
   web-server:
     container_name: web-1
     build:
@@ -88,6 +100,8 @@ services:
     ports:
       - "3000:3000"
     restart: "always"
+    profiles:
+      - app
   forward-proxy:
     container_name: forward-proxy
     depends_on:
@@ -104,3 +118,9 @@ services:
     ports:
       - "5000:5000"
     restart: "always"
+    profiles:
+      - app
+
+volumes:
+  postgresql_master_data:
+    driver: local
