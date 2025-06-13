@@ -27,7 +27,6 @@ def create_app(env="dev"):
     @app.get("/")
     def route(req: Request) -> Response:
         free_server = balancer.get_server()
-        print(free_server)
         response = requests.get(f"{free_server}/aleks")
         body = response.json()
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)

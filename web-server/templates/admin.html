@@ -27,7 +27,6 @@
                     throw new Error(`Response statusL ${response.status}`);
                 }
                 const json = await res.json();
-                console.log(json);
             }).catch((error) => {
                 console.error(error.message);
 
