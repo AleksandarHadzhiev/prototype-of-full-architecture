@@ -4,9 +4,15 @@ from fastapi import FastAPI, Response, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from config import load_config
 
+from src.tools.connection import Connection
+
 def create_app(env="dev"):
     config = load_config(env=env)
     app = FastAPI()
+
+    master = Connection()
+    slave_1_conn = Connection(port="59141")
+    slave_2_conn = Connection(port="59142")
 
     app.add_middleware(
         CORSMiddleware,
