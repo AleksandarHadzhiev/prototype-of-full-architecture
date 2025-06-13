@@ -13,8 +13,21 @@
         Header
     </header>
     <main>
-        <p>Welcome to this amazing To Do web app.</p>
-        <p>Click <a href="/admin">here</a> to go to the admin page</p>
+        <form class="main-container">
+            <div>
+                <label for="title">Title</label>
+                <input name="title" type="text" placeholder="Clean kitchen" />
+            </div>
+            <div>
+                <label for="desc">Description <span>(optional)</span></label>
+                <input name="desc" type="text"
+                    placeholder="The cook is dirty, clean the kitchen before the ownwer is here tomorrow at 17:00." />
+            </div>
+            <div>
+                <label for="complete">Complete by: <span>(optional)</span></label>
+                <input name="complete" type="datetime-local" />
+            </div>
+        </form>
     </main>
     <footer>
         Footer
@@ -33,7 +46,7 @@
             })
         }
 
-        getData()
+        <!-- getData() -->
     </script>
 </body>
 
