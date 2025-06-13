@@ -44,26 +44,26 @@ def create_app(env="dev"):
 
     @app.get("/backend/{path:path}")
     async def backend_get_request(path: str):
-        response = requests.get(f"{config.BACKEND_URL}{path}")
+        response = requests.get(f"{config.BACKEND_URL}/{path}")
         body = response.json()
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
     @app.post("/backend/{path:path}")
     async def backend_post_request(path: str):
-        response = requests.get(f"{config.BACKEND_URL}{path}")
+        response = requests.get(f"{config.BACKEND_URL}/{path}")
         body = response.json()
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
 
     @app.put("/backend/{path:path}")
     async def backend_put_request(path: str):
-        response = requests.get(f"{config.BACKEND_URL}{path}")
+        response = requests.get(f"{config.BACKEND_URL}/{path}")
         body = response.json()
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
     @app.delete("/backend/{path:path}")
     async def backend_delete_request(path: str):
-        response = requests.get(f"{config.BACKEND_URL}{path}")
+        response = requests.get(f"{config.BACKEND_URL}/{path}")
         body = response.json()
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
