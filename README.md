@@ -13,7 +13,7 @@ There are three ways of running the application. Two of them are dockerized and 
 #### Docker - single
 Here the app executes with 1 container per service
 1) Make sure you are in the root directory.
-2) Run the following command: `docker compose -f docker-compose.single.yml up`
+2) Run the following command: `docker compose -f docker-compose.single.yml --profile app up`
 3) Additional Info: If you would like you can run the previous command with `-d` at the end. I suggest not to, so that you can see the calls running in the terminal and not have to switch between terminals in the docker envrionment.
 #### Docker - multiple
 Here the app executes with 1 container for the proxies and 2 containers for the web server and 2 contaienrs for the backend. That way the load balancing can be spectated.
