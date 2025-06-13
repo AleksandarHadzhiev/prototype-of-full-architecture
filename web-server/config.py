@@ -7,13 +7,13 @@ class Config:
 class DevConfig(Config):
     ENV = "dev"
     BASE_URL = "http://127.0.0.1:3000"
-    BACKEND_URL = "http://127.0.0.1:8080"
+    BACKEND_URL = "http://127.0.0.1:8000"
     ALLOWED_ORIGINS = ["127.0.0.1:5000"]
 
 class DockerConfig(Config):
     ENV = "docker"
-    BASE_URL = "0.0.0.0"
-    BACKEND_URL = "http://backend-1:8080"
+    BASE_URL = "http://0.0.0.0:3000"
+    BACKEND_URL = "http://reverse-proxy:8000"
     ALLOWED_ORIGINS = ["http://forward-proxy:5000"]
 
 def load_config(env) -> Config:
