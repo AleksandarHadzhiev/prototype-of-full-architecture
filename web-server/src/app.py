@@ -49,8 +49,9 @@ def create_app(env="dev"):
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
     @app.post("/backend/{path:path}")
-    async def backend_post_request(path: str):
-        response = requests.get(f"{config.BACKEND_URL}/{path}")
+    async def backend_post_request(path: str, request: Request):
+        data = await request.json()
+        response = requests.post(f"{config.BACKEND_URL}/{path}", data=json.dumps(data))
         body = response.json()
         return Response(content=json.dumps(body), status_code=status.HTTP_200_OK)
 
