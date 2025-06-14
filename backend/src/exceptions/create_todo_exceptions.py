@@ -1,6 +1,6 @@
-class EmptyDescriptionException(Exception):
+class EmptyContentException(Exception):
     def __init__(self, message: str):
-        self.message = f"Description at with content:<{message}> is invalid. It is empty."
+        self.message = f"'Content' with content:<{message}> is invalid. It is empty."
         super().__init__(self.message)
 
 class EmptyCompleteDateException(Exception):

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import load_config
 
 from src.tools.connection import Connection
-from src.exceptions.create_todo_exceptions import EmptyTitleException, InvalidCompleteDateException, EmptyCompleteDateException, EmptyDescriptionException
+from src.exceptions.create_todo_exceptions import EmptyTitleException, InvalidCompleteDateException, EmptyCompleteDateException, EmptyContentException
 from src.todos.route import TodosRoute
 
 def create_app(env="dev"):
@@ -36,8 +36,8 @@ def create_app(env="dev"):
     async def empty_title_exception_handler(requst: Request, exc: InvalidCompleteDateException):
         return Response(content=json.dumps(exc.message),status_code=status.HTTP_400_BAD_REQUEST)
 
-    @app.exception_handler(EmptyDescriptionException)
-    async def empty_title_exception_handler(requst: Request, exc: EmptyDescriptionException):
+    @app.exception_handler(EmptyContentException)
+    async def empty_title_exception_handler(requst: Request, exc: EmptyContentException):
         return Response(content=json.dumps(exc.message),status_code=status.HTTP_400_BAD_REQUEST)
 
     @app.exception_handler(EmptyCompleteDateException)
