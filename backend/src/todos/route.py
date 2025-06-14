@@ -8,3 +8,4 @@ class TodosRoute():
         self.controller = Controller(conn=connection)
         self.master_db = connection
         self.router.add_api_route("/", self.controller.create_todo, methods=["POST"])
+        self.router.add_api_route("/", self.controller.get_todos, methods=["GET"])

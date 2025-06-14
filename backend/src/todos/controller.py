@@ -15,3 +15,10 @@ class Controller():
     def create_todo(self, todo: CreateTodo) -> Response:
         self.service.create_todo(data=todo)
         return Response(content=json.dumps({"message": f"The task was created at {datetime.now()}"}), status_code=status.HTTP_201_CREATED)
+
+    def get_todos(self) -> Response:
+        todos = self.service.get_todos(conn=self.master_db)
+        return Response(
+            content=json.dumps(todos), status_code=status.HTTP_200_OK
+        )
+        

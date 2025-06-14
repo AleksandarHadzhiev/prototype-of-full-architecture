@@ -18,3 +18,29 @@ class Service():
         cursor = conn.cursor()
         cursor.execute(sql_statement)
         conn.commit()
+
+    def get_todos(self, conn: Connection):
+        sql_statement = "SELECT * FROM todos"
+        _conn = self.master.get_conn()
+        cursor = _conn.cursor()
+        cursor.execute(sql_statement)
+        todos = cursor.fetchall()
+        if len(todos) > 0:
+            _todos = []
+            for todo in todos:
+                _todo = self._format_todo(todo=todo)
+                _todos.append(_todo)
+            return _todos
+        else:
+            return []
+
+    def _format_todo(self, todo):
+        return {
+            "id": todo[0],
+            "title": todo[1],
+            "content": todo[2],
+            "date_created": todo[3],
+            "date_completed": todo[4],
+            "date_to_complete": todo[5],
+            "status": todo[6],
+        }
