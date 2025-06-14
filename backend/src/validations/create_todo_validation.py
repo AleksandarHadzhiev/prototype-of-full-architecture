@@ -1,19 +1,30 @@
-import asyncio
+from datetime import datetime
+from pydantic import BaseModel, field_validator
+from src.exceptions.create_todo_exceptions import InvalidCompleteDateException, EmptyTitleException, EmptyCompleteDateException, EmptyDescriptionException
 
-class CreateTodoValidation():
-    def __init__(self, data: dict):
-        self.data:dict = data
-        self.errors = []
+class CreateTodo(BaseModel):
+    title: str
+    description: str | None = None
+    completed_at: str | None = None
 
-    async def _check_for_expected_keys(self):
-        if "title" not in self.data:
-            self.errors.append("Title is missing")
+    @field_validator("title")
+    def title_not_empty(cls, title: str):
+        if title.strip().replace(" ", "") == "":
+            raise EmptyTitleException(message=title.strip().replace(" ", ""))
+
+    @field_validator("description")
+    def title_not_empty(cls, description: str):
+        if description != None and description.strip().replace(" ", "") == "":
+            raise EmptyDescriptionException(message=description.strip().replace(" ", ""))
+
+    @field_validator("completed_at")
+    def compare_completed_at_with_created_at(cls, completed_at: str):
+        if completed_at != None and completed_at.strip().replace(" ", "") == "":
+           raise EmptyCompleteDateException(completed_at)
         else:
-            for key in list(self.data.keys()):
-                self._check_if_field_is_empty_string(key)
+            completed_at_as_date = datetime.strptime(completed_at, '%m/%d/%y %H:%M:%S')
+            current_date = datetime.now()
 
-    async def _check_if_field_is_empty_string(self, field: str):
-        if self.data[field].strip() == "":
-            self.errors.append(f"{field} is empty")
-    async def validate_data(self):
-        asyncio.gather(self._check_for_expected_keys(), self._check_if_field_is_empty_string())
+            difference = completed_at_as_date - current_date
+            if (difference.total_seconds() < 0):
+                raise InvalidCompleteDateException(message=completed_at)
