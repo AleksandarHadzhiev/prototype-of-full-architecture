@@ -52,3 +52,22 @@ function createTodo() {
             alert(err)
         })
 }
+
+function getTodos() {
+    fetch("/backend/todos/", { method: "GET" })
+        .then(async (res) => {
+            if (res.status == 201) {
+                const data = await res.json()
+                alert(data.message)
+            }
+            else {
+                const data = await res.json()
+                console.log(data)
+            }
+        })
+        .catch((err) => {
+            alert(err)
+        })
+}
+
+getTodos()
