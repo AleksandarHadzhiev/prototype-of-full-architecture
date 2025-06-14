@@ -11,7 +11,7 @@ class Service():
         sql_statement = f"""
             INSERT INTO todos (id, title, content, date_created, date_completed, date_to_complete, status)
             VALUES (
-                DEFAULT, '{data.title}', '{data.content}', '{datetime.now().strftime('%m/%d/%y %H:%M:%S')}', DEFAULT, '{data.date_to_complete}', DEFAULT
+                DEFAULT, '{data.title}', '{data.content}', '{datetime.now().strftime('%d-%m-%Y, %H:%M:%S')}', DEFAULT, '{data.date_to_complete}', DEFAULT
             );
         """
         conn = self.master.get_conn()
