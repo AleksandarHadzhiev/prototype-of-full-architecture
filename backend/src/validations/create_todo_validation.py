@@ -9,11 +9,12 @@ class CreateTodo(BaseModel):
 
     @field_validator("title")
     def title_not_empty(cls, title: str):
+        print("IN TITLE CHECK")
         if title.strip().replace(" ", "") == "":
             raise EmptyTitleException(message=title.strip().replace(" ", ""))
 
     @field_validator("description")
-    def title_not_empty(cls, description: str):
+    def description_not_empty(cls, description: str):
         if description != None and description.strip().replace(" ", "") == "":
             raise EmptyDescriptionException(message=description.strip().replace(" ", ""))
 
