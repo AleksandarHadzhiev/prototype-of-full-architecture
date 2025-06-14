@@ -13,24 +13,12 @@
         Header
     </header>
     <main>
-        <form onsubmit="event.preventDefault(); createTodo()" class="main-container">
+        <div class="todos">
+            <div class="container"></div>
             <div>
-                <label for="title">Title</label>
-                <input id="title" name="title" type="text" placeholder="Clean kitchen" />
+                <a href="./create-todo">Create todo</a>
             </div>
-            <div>
-                <label for="desc">Description <span>(optional)</span></label>
-                <input id="desc" name="desc" type="text"
-                    placeholder="The cook is dirty, clean the kitchen before the ownwer is here tomorrow at 17:00." />
-            </div>
-            <div>
-                <label for="complete">Complete by: <span>(optional)</span></label>
-                <input id="dateToComplete" name="complete" type="datetime-local" />
-            </div>
-            <div>
-                <button>Submit</button>
-            </div>
-        </form>
+        </div>
     </main>
     <footer>
         Footer
