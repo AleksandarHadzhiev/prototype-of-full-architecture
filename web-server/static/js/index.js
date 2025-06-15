@@ -6,8 +6,8 @@ function displayTodos(data) {
         const buttonsContainer = document.createElement('div')
         const editBtn = document.createElement('button')
         const removeBtn = document.createElement('button')
-        editBtn.textContent = "E"
-        removeBtn.textContent = "D"
+        removeBtn.innerHTML = `<i class="fa fa-trash" aria-hidden="true"></i>`
+        editBtn.innerHTML = `<i class="fa fa-pencil" aria-hidden="true"></i>`
         buttonsContainer.appendChild(editBtn)
         buttonsContainer.appendChild(removeBtn)
         task.classList.add('task')
