@@ -4,6 +4,8 @@ WORKDIR /
 
 COPY Pipfile Pipfile.lock ./
 
+RUN apt-get update && \
+    apt-get install -y libpq-dev gcc
 RUN pip install pipenv
 RUN pipenv --version
 RUN pipenv install 

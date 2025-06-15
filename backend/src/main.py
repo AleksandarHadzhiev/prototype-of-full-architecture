@@ -5,20 +5,24 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import load_config
 
 from src.tools.connection import Connection
+from src.tools.connections_balancer import ConnectionsBalancer
 from src.exceptions.create_todo_exceptions import EmptyTitleException, InvalidCompleteDateException, EmptyCompleteDateException, EmptyContentException
 from src.todos.route import TodosRoute
 
 def create_app(env="dev"):
     config = load_config(env=env)
-    master = Connection()
-    
-    
-    todos = TodosRoute(connection=master)
+  
+    master = Connection(host="master")
+    print(master.get_conn().dsn)
+    balancer = ConnectionsBalancer(master_db=master)
     
     app = FastAPI()
 
-    slave_1_conn = Connection(port="59141")
-    slave_2_conn = Connection(port="59142")
+    slave_1_conn = Connection(port=_get_port_for_salves_based_on_env(env=env), host="slave_1")
+    slave_2_conn = Connection(port=_get_port_for_salves_based_on_env(env=env, slave="2"), host="slave_2")
+    balancer.add_read_connection(slave=slave_1_conn)
+    balancer.add_read_connection(slave=slave_2_conn)
+    todos = TodosRoute(balancer=balancer)
 
     app.add_middleware(
         CORSMiddleware,
@@ -58,3 +62,11 @@ def create_app(env="dev"):
         else: return Response(content=json.dumps({"error": "Empty name"}), status_code=status.HTTP_400_BAD_REQUEST)
 
     return app
+
+def _get_port_for_salves_based_on_env(env="dev", slave="1"):
+    if env == "docker":
+        return "5432"
+    else:
+        if slave == "1":
+            return "59141"
+        return "59142"
