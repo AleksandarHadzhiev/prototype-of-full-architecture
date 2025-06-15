@@ -27,6 +27,13 @@ class DockerConfig(Config):
     ENV = "docker"
     BASE_URL = "http://localhost:8080"
     ALLOWED_ORIGINS = "http://reverse-proxy:8000"
+    POSTGRES_HOST = "0.0.0.0"
+    POSTGRES_DB = "todos"
+    POSTGRES_USER = "dev"
+    POSTGRES_PASSWORD = "dev"
+    POSTGRES_MASTER_PORT = "5432"
+    POSTGRES_SLAVE_ONE_PORT = "59141"
+    POSTGRES_SLAVE_TWO_PORT = "59142"
 
 def load_config(env) -> Config:
     match env:

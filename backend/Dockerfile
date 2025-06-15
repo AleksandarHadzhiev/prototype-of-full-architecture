@@ -4,9 +4,14 @@ WORKDIR /
 
 COPY Pipfile Pipfile.lock ./
 
+RUN apt-get update && apt-get install -y \
+    postgresql \
+    libpq-dev \
+    python3-dev \
+    && apt-get clean
 RUN pip install pipenv
 RUN pipenv --version
-RUN pipenv install 
+RUN pipenv install
 
 COPY  . .
 

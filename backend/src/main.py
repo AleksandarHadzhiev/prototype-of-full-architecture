@@ -11,15 +11,14 @@ from src.todos.route import TodosRoute
 
 def create_app(env="dev"):
     config = load_config(env=env)
-    master = Connection()
+  
+    master = Connection(host="master")
     balancer = ConnectionsBalancer(master_db=master)
-    
-    
     
     app = FastAPI()
 
-    slave_1_conn = Connection(port="59141")
-    slave_2_conn = Connection(port="59142")
+    slave_1_conn = Connection(port="59141", host='slave_1')
+    slave_2_conn = Connection(port="59142", host='slave_2')
     balancer.add_read_connection(slave=slave_1_conn)
     balancer.add_read_connection(slave=slave_2_conn)
     todos = TodosRoute(connection=master)
