@@ -22,4 +22,11 @@ class Controller():
         return Response(
             content=json.dumps(todos), status_code=status.HTTP_200_OK
         )
-        
+
+    def edit_todo(self, todo: CreateTodo, id: int) -> Response:
+        self.service.edit_todo(data=todo, id=id)
+        return Response(content=json.dumps({"message": f"The task was created at {datetime.now()}"}), status_code=status.HTTP_201_CREATED)
+
+    def complete_todo(self, id:int) -> Response:
+        self.service.create_todo()
+        return Response(content=json.dumps({"message": f"The task was created at {datetime.now()}"}), status_code=status.HTTP_201_CREATED)

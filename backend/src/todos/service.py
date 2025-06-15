@@ -6,6 +6,29 @@ class Service():
     def __init__(self, master: Connection):
         self.master = master
 
+    def _execute_action(self, sql_statement: str):
+        conn = self.master.get_conn()
+        cursor = conn.cursor()
+        cursor.execute(sql_statement)
+        conn.commit()
+
+    def complete_todo(self, id: int):
+        sql_statement = f"""
+            UPDATE todos SET 
+                todos.status = 'finished'
+            WHERE todos.id = {id};
+        """
+        self._execute_action(sql_statement=sql_statement)
+
+    def edit_todo(self, data: CreateTodo, id: int):
+        sql_statement = f"""
+            UPDATE todos SET 
+                todos.title = {data.title},
+                todos.content = {data.content},
+                todos.date_to_complete = {data.date_to_complete}
+            WHERE todos.id = {id};
+        """
+        self._execute_action(sql_statement=sql_statement)
 
     def create_todo(self, data: CreateTodo):
         sql_statement = f"""
@@ -14,10 +37,7 @@ class Service():
                 DEFAULT, '{data.title}', '{data.content}', '{datetime.now().strftime('%d-%m-%Y, %H:%M:%S')}', DEFAULT, '{data.date_to_complete}', DEFAULT
             );
         """
-        conn = self.master.get_conn()
-        cursor = conn.cursor()
-        cursor.execute(sql_statement)
-        conn.commit()
+        self._execute_action(sql_statement=sql_statement)
 
     def get_todos(self, conn: Connection):
         sql_statement = "SELECT * FROM todos"
