@@ -3,9 +3,20 @@ function displayTodos(data) {
     data.forEach(todo => {
         const task = document.createElement('div');
         const text = document.createElement('p')
+        const buttonsContainer = document.createElement('div')
+        const editBtn = document.createElement('button')
+        const removeBtn = document.createElement('button')
+        editBtn.textContent = "E"
+        removeBtn.textContent = "D"
+        buttonsContainer.appendChild(editBtn)
+        buttonsContainer.appendChild(removeBtn)
         task.classList.add('task')
+        buttonsContainer.classList.add('buttons')
+        console.log(buttonsContainer)
+        console.log(task)
         text.innerText = todo.title;
         task.appendChild(text)
+        task.appendChild(buttonsContainer)
         container.appendChild(task)
     });
 }

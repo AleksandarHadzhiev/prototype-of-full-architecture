@@ -12,14 +12,14 @@ from src.todos.route import TodosRoute
 def create_app(env="dev"):
     config = load_config(env=env)
   
-    master = Connection(host="master")
+    master = Connection()
     print(master.get_conn().dsn)
     balancer = ConnectionsBalancer(master_db=master)
     
     app = FastAPI()
 
-    slave_1_conn = Connection(port=_get_port_for_salves_based_on_env(env=env), host="slave_1")
-    slave_2_conn = Connection(port=_get_port_for_salves_based_on_env(env=env, slave="2"), host="slave_2")
+    slave_1_conn = Connection(port=_get_port_for_salves_based_on_env(env=env, slave="1"))
+    slave_2_conn = Connection(port=_get_port_for_salves_based_on_env(env=env, slave="2"))
     balancer.add_read_connection(slave=slave_1_conn)
     balancer.add_read_connection(slave=slave_2_conn)
     todos = TodosRoute(balancer=balancer)
