@@ -57,14 +57,15 @@ def create_app(env="dev"):
 
 
     @app.put("/backend/{path:path}")
-    async def backend_put_request(path: str):
-        response = requests.get(f"{config.BACKEND_URL}/{path}")
+    async def backend_put_request(path: str, request: Request):
+        data = await request.json()
+        response = requests.put(f"{config.BACKEND_URL}/{path}", data=json.dumps(data))
         body = response.json()
         return Response(content=json.dumps(body), status_code=response.status_code)
 
     @app.delete("/backend/{path:path}")
     async def backend_delete_request(path: str):
-        response = requests.get(f"{config.BACKEND_URL}/{path}")
+        response = requests.delete(f"{config.BACKEND_URL}/{path}")
         body = response.json()
         return Response(content=json.dumps(body), status_code=response.status_code)
 

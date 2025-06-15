@@ -40,11 +40,18 @@ def create_app(env="dev"):
         return Response(content=json.dumps(body), status_code=response.status_code)
 
     @app.put("{path:path}")
-    def put_request(path: str, request: Request) -> Response:
-        pass
+    async def put_request(path: str, request: Request) -> Response:
+        free_server = balancer.get_server()
+        data = await request.json()
+        response = requests.put(f"{free_server}{path}", data=json.dumps(data))
+        body = response.json()
+        return Response(content=json.dumps(body), status_code=response.status_code)
 
     @app.delete("{path:path}")
     def delete_request(path: str, request: Request) -> Response:
-        pass
+        free_server = balancer.get_server()
+        response = requests.delete(f"{free_server}{path}")
+        body = response.json()
+        return Response(content=json.dumps(body), status_code=response.status_code)
 
     return app
