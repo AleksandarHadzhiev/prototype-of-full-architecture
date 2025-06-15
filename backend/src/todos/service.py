@@ -21,7 +21,7 @@ class Service():
 
     def get_todos(self, conn: Connection):
         sql_statement = "SELECT * FROM todos"
-        _conn = self.master.get_conn()
+        _conn = conn.get_conn()
         cursor = _conn.cursor()
         cursor.execute(sql_statement)
         todos = cursor.fetchall()

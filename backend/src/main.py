@@ -5,20 +5,24 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import load_config
 
 from src.tools.connection import Connection
+from src.tools.connections_balancer import ConnectionsBalancer
 from src.exceptions.create_todo_exceptions import EmptyTitleException, InvalidCompleteDateException, EmptyCompleteDateException, EmptyContentException
 from src.todos.route import TodosRoute
 
 def create_app(env="dev"):
     config = load_config(env=env)
     master = Connection()
+    balancer = ConnectionsBalancer(master_db=master)
     
     
-    todos = TodosRoute(connection=master)
     
     app = FastAPI()
 
     slave_1_conn = Connection(port="59141")
     slave_2_conn = Connection(port="59142")
+    balancer.add_read_connection(slave=slave_1_conn)
+    balancer.add_read_connection(slave=slave_2_conn)
+    todos = TodosRoute(connection=master)
 
     app.add_middleware(
         CORSMiddleware,
