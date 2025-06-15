@@ -3,7 +3,7 @@ services:
   postgresql-master:
     container_name: master
     build:
-      context: ./
+      context: ./backend
       dockerfile: Dockerfile.sql
     restart: always
     ports:

@@ -7,7 +7,7 @@ class ConnectionsBalancer():
         self.read_connections: list[Connection] = []
 
     def add_read_connection(self, slave: Connection):
-        self.read_connections(slave)
+        self.read_connections.append(slave)
     
     def get_master(self):
         return self.master_db
