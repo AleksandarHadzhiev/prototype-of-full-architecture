@@ -8,5 +8,6 @@ class TodosRoute():
         self.controller = Controller(balancer=balancer)
         self.router.add_api_route("/", self.controller.create_todo, methods=["POST"])
         self.router.add_api_route("/", self.controller.get_todos, methods=["GET"])
-        self.router.add_api_route("/<id>", self.controller.edit_todo, methods=["PUT"])
-        self.router.add_api_route("/<id>/complete", self.controller.complete_todo, methods=["PUT"])
+        self.router.add_api_route("/{id}", self.controller.edit_todo, methods=["PUT"])
+        self.router.add_api_route("/{id}", self.controller.delete_todo, methods=["DELETE"])
+        self.router.add_api_route("/{id}/complete", self.controller.complete_todo, methods=["PUT"])

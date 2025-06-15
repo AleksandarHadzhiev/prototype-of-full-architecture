@@ -15,18 +15,25 @@ class Service():
     def complete_todo(self, id: int):
         sql_statement = f"""
             UPDATE todos SET 
-                todos.status = 'finished'
-            WHERE todos.id = {id};
+                status = 'finished'
+            WHERE id = {id};
         """
         self._execute_action(sql_statement=sql_statement)
 
     def edit_todo(self, data: CreateTodo, id: int):
         sql_statement = f"""
             UPDATE todos SET 
-                todos.title = {data.title},
-                todos.content = {data.content},
-                todos.date_to_complete = {data.date_to_complete}
-            WHERE todos.id = {id};
+                title = '{data.title}',
+                content = '{data.content}',
+                date_to_complete = '{data.date_to_complete}'
+            WHERE id = {id};
+        """
+        self._execute_action(sql_statement=sql_statement)
+
+    def delete_todo(self, id: int):
+        sql_statement = f"""
+            DELETE FROM todos
+            WHERE id = {id};
         """
         self._execute_action(sql_statement=sql_statement)
 

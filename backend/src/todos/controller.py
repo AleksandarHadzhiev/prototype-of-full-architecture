@@ -25,8 +25,13 @@ class Controller():
 
     def edit_todo(self, todo: CreateTodo, id: int) -> Response:
         self.service.edit_todo(data=todo, id=id)
-        return Response(content=json.dumps({"message": f"The task was created at {datetime.now()}"}), status_code=status.HTTP_201_CREATED)
+        return Response(content=json.dumps({"message": f"The task was edited at {datetime.now()}"}), status_code=status.HTTP_201_CREATED)
+
+    def delete_todo(self, id: int) -> Response:
+        self.service.delete_todo(id=id)
+        return Response(content=json.dumps({"message": f"The task was deleted at {datetime.now()}"}), status_code=status.HTTP_201_CREATED)
+
 
     def complete_todo(self, id:int) -> Response:
         self.service.create_todo()
-        return Response(content=json.dumps({"message": f"The task was created at {datetime.now()}"}), status_code=status.HTTP_201_CREATED)
+        return Response(content=json.dumps({"message": f"The task was completed at {datetime.now()}"}), status_code=status.HTTP_201_CREATED)
